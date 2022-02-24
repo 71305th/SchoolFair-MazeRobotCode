@@ -66,7 +66,7 @@ public final class Constants {
   public static final class LimelightConstants {
         // how many degrees back is your limelight rotateed from perfectly vertical
     // check our own limelight degree
-    public static final double limelightMounAngleDegrees = 50.0;
+    public static final double limelightMounAngleDegrees = 15.0;
 
     // distance from the center of the limelight lens to the floor
     public static final double limelightLensHeightMeters = 0.8;

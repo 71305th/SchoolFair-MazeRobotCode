@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class TeleopAimCommand extends CommandBase {
+public class AbsoluteAim extends CommandBase {
         // This command is not going to be used in the competition
         // Sorry Aaron!!
 
@@ -28,22 +28,24 @@ public class TeleopAimCommand extends CommandBase {
         double targetX = 2;
         double targetY = 0;
 
-        private static final double kP = 0.5;
-        private static final double kI = 0.005;
-        private static final double kD = 0;
+        private static final double kP = 0.7;
+        private static final double kI = 0.025;
+        private static final double kD = 0.1;
         private static final double timeDiff = 0.02;
 
         private double rError;
         private double integralSumR;
         private double lastError;
 
-        public TeleopAimCommand(DriveSubsystem robotDrive) {
+        public AbsoluteAim(DriveSubsystem robotDrive) {
                 m_robotDrive = robotDrive;
                 addRequirements(robotDrive);
         }
 
         @Override
         public void initialize() {
+                System.out.println("Executing Absolute Aim");
+
                 initTranslation = m_robotDrive.getPose().getTranslation();
                 initRotation = m_robotDrive.getPose().getRotation();
                 // get translation2d object and rotation2d object from the Pose2d object from
@@ -101,7 +103,7 @@ public class TeleopAimCommand extends CommandBase {
         }
 
         public boolean isFinished() {
-                if (Math.abs(rError) < 0.1){
+                if (Math.abs(rError) < 0.05){
                         return true;
                     }
                 return false;

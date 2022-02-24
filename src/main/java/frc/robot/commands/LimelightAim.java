@@ -38,6 +38,7 @@ public class LimelightAim extends CommandBase {
     public void initialize() {
         xError = m_limelight.getX()*Math.PI/180;
         distError = m_limelight.getDis();
+        System.out.println("Executing Limelight Aim");
     }
 
     public void execute() {
@@ -71,7 +72,7 @@ public class LimelightAim extends CommandBase {
     }
 
     public boolean isFinished() {
-        if (Math.abs(xError) < 0.1 && Math.abs(distError)<0.8){
+        if (Math.abs(xError) < 0.1 && Math.abs(distError)<3){
             return true;
         }
         integralSumX = 0;

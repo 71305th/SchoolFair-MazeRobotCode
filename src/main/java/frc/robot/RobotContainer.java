@@ -24,7 +24,7 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.LimelightAim;
-import frc.robot.commands.TeleopAimCommand;
+import frc.robot.commands.AbsoluteAim;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -87,7 +87,7 @@ public class RobotContainer {
         new JoystickButton(m_driverController, 6)
                 .whenPressed(() -> m_robotDrive.setMaxOutput(0.3))
                 .whenReleased(() -> m_robotDrive.setMaxOutput(1));
-        new JoystickButton(m_driverController, 3).whenPressed(new LimelightAim(m_robotDrive, m_limelight));
+        new JoystickButton(m_driverController, 3).whenPressed(new AbsoluteAim(m_robotDrive));
         new JoystickButton(m_driverController, 1).whenHeld(new LimelightAim(m_robotDrive, m_limelight));
         new JoystickButton(m_driverController, 2).whenPressed(()->CommandScheduler.getInstance().cancelAll());
         new JoystickButton(m_driverController, 4).whenPressed(()->m_robotDrive.resetOdometry(new Pose2d(0,0,new Rotation2d(0))));
