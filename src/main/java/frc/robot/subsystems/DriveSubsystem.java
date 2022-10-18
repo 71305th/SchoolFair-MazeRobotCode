@@ -18,7 +18,6 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -38,14 +37,14 @@ public class DriveSubsystem extends SubsystemBase {
   private final WPI_TalonSRX rightFollow = new WPI_TalonSRX(DriveConstants.kRightMotor1Port);
 
 
-  private final SpeedControllerGroup m_leftMotors =
-      new SpeedControllerGroup(
+  private final MotorControllerGroup m_leftMotors =
+      new MotorControllerGroup(
           leftFollow,
           leftLead);
 
   // The motors on the right side of the drive.
-  private final SpeedControllerGroup m_rightMotors =
-      new SpeedControllerGroup(
+  private final MotorControllerGroup m_rightMotors =
+      new MotorControllerGroup(
           rightFollow,
           rightLead);
 

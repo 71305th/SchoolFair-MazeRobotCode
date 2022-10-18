@@ -26,6 +26,7 @@ public final class Constants {
     public static final DifferentialDriveKinematics kDriveKinematics =
         new DifferentialDriveKinematics(kTrackwidthMeters);
 
+    // Encoders
     public static final int kEncoderCPR = 4096;
     public static final double kWheelDiameterMeters = 0.1016;
     public static final double kWheelCircumference = kWheelDiameterMeters * Math.PI;
@@ -66,10 +67,10 @@ public final class Constants {
   public static final class LimelightConstants {
         // how many degrees back is your limelight rotateed from perfectly vertical
     // check our own limelight degree
-    public static final double limelightMounAngleDegrees = 52.0;
+    public static final double limelightMounAngleDegrees = 60.0;
 
     // distance from the center of the limelight lens to the floor
-    public static final double limelightLensHeightMeters = 0.24;
+    public static final double limelightLensHeightMeters = 0.27;
 
     // distance from the target to the floor
     public static final double goalHeightMeters = 1;

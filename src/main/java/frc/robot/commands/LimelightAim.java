@@ -47,7 +47,7 @@ public class LimelightAim extends CommandBase {
         target = m_limelight.getTarget();
 
         xError = m_limelight.getX()*Math.PI/180;
-        distError = m_limelight.getDis();
+        distError = m_limelight.getDis() - 0.6;
         if (Math.abs(integralSumX) < 100) {
             integralSumX += xError;
         }
@@ -67,7 +67,6 @@ public class LimelightAim extends CommandBase {
             m_drive.arcadeDrive(0, 0);
         }
         
-
         lastError = xError;
         lastDistError = distError;
         SmartDashboard.putNumber("distOutput",distOutput);
