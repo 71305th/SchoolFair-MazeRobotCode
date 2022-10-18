@@ -61,7 +61,7 @@ public class LimelightAim extends CommandBase {
         double output = kPangle * xError + kIangle * integralSumX + kDangle * derivative;
         double distOutput = kPdist * distError + kIdist * integralSumDist + kDdist * distDerivative;
         
-        if (target>0){
+        if (target>0 && distError>0){
             m_drive.arcadeDrive(distOutput, output);
         } else {
             m_drive.arcadeDrive(0, 0);
