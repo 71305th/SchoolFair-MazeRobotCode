@@ -5,23 +5,10 @@
 package frc.robot;
 
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.trajectory.TrajectoryUtil;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.LimelightAim;
 import frc.robot.commands.AbsoluteAim;
@@ -29,14 +16,9 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.List;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -69,7 +51,7 @@ public class RobotContainer {
                 // hand, and turning controlled by the right.
                 new RunCommand(
                         () -> m_robotDrive.arcadeDrive(
-                                -m_driverController.getRawAxis(1), m_driverController.getRawAxis(4)),
+                                -0.4*m_driverController.getRawAxis(1), 0.6*m_driverController.getRawAxis(4)),
                         m_robotDrive));
     }
 
@@ -85,8 +67,8 @@ public class RobotContainer {
     private void configureButtonBindings() {
         // Drive at half speed when the right bumper is held
         new JoystickButton(m_driverController, 6)
-                .whenPressed(() -> m_robotDrive.setMaxOutput(0.3))
-                .whenReleased(() -> m_robotDrive.setMaxOutput(1));
+                .whenPressed(() -> m_robotDrive.setMaxOutput(0.4))
+                .whenReleased(() -> m_robotDrive.setMaxOutput(0.8));
         new JoystickButton(m_driverController, 3).whenPressed(new AbsoluteAim(m_robotDrive));
         new JoystickButton(m_driverController, 1).whenHeld(new LimelightAim(m_robotDrive, m_limelight));
         new JoystickButton(m_driverController, 2).whenPressed(()->CommandScheduler.getInstance().cancelAll());
@@ -137,23 +119,23 @@ public class RobotContainer {
         //         ),
         //         new Pose2d(3.5, 1, new Rotation2d(0)),
         //         config);
-        String trajectoryJSON = "paths/testPath.wpilib.json";
-        try{
-        Path jsonPath =
-        Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-        Trajectory testTrajectory = TrajectoryUtil.fromPathweaverJson(jsonPath);
-        Command ramseteCommand = m_robotDrive.createCommandForTrajectory(testTrajectory);
+        // String trajectoryJSON = "paths/testPath.wpilib.json";
+        // try{
+        // Path jsonPath =
+        // Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+        // Trajectory testTrajectory = TrajectoryUtil.fromPathweaverJson(jsonPath);
+        // Command ramseteCommand = m_robotDrive.createCommandForTrajectory(testTrajectory);
 
-        // Reset odometry to the starting paose of the trajectory.
-        m_robotDrive.resetOdometry(testTrajectory.getInitialPose());
+        // // Reset odometry to the starting paose of the trajectory.
+        // m_robotDrive.resetOdometry(testTrajectory.getInitialPose());
 
-        // Run path following command, then stop at the end.
-        return ramseteCommand.andThen(() -> m_robotDrive.tankDriveVelocity(0, 0));
-        } catch (IOException e){
-        DriverStation.reportError("can't open json:"+e.getMessage(),
-        e.getStackTrace());
-        }
-        return null;
+        // // Run path following command, then stop at the end.
+        // return ramseteCommand.andThen(() -> m_robotDrive.tankDriveVelocity(0, 0));
+        // } catch (IOException e){
+        // DriverStation.reportError("can't open json:"+e.getMessage(),
+        // e.getStackTrace());
+        // }
+        return new RunCommand(()->CommandScheduler.getInstance().schedule(new LimelightAim(m_robotDrive, m_limelight)),m_robotDrive,m_limelight);
     }
 
     public void testDrive(){

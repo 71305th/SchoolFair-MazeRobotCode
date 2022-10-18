@@ -14,29 +14,32 @@ public class LimeLightSubsystem extends SubsystemBase {
     NetworkTableEntry ty = table.getEntry("ty");
     NetworkTableEntry tx = table.getEntry("tx");
     NetworkTableEntry ta = table.getEntry("ta");
+    NetworkTableEntry tv = table.getEntry("tv");
 
     double x;
     double y;
     double area;
+    double target;
 
     // calculate angles
     double angleToGoalDegrees = LimelightConstants.limelightMounAngleDegrees + y;
     double angleToGoalRadians = angleToGoalDegrees * (Math.PI / 180.0);
 
     // calculate distance
-    double distanceFromLimeligtToGoalInches = ((LimelightConstants.goalHeightMeters - LimelightConstants.limelightLensHeightMeters)/Math.tan(angleToGoalRadians));
+    double distanceFromLimeligtToGoal = ((LimelightConstants.goalHeightMeters - LimelightConstants.limelightLensHeightMeters)/Math.tan(angleToGoalRadians));
 
     // proportional control constant for distance
     public void periodic() {
         x = tx.getDouble(0.0);
         y = ty.getDouble(0.0);
         area = ta.getDouble(0.0);
+        target = tv.getDouble(0.0);
 
         SmartDashboard.putNumber("LimelightX", x);
         SmartDashboard.putNumber("LimelightY", y);
         SmartDashboard.putNumber("LimelightArea", area);
 
-        distanceFromLimeligtToGoalInches = ((LimelightConstants.goalHeightMeters - LimelightConstants.limelightLensHeightMeters)/Math.tan((angleToGoalDegrees+y)*Math.PI/180));
+        distanceFromLimeligtToGoal = ((LimelightConstants.goalHeightMeters - LimelightConstants.limelightLensHeightMeters)/Math.tan((angleToGoalDegrees+y)*Math.PI/180));
         
         // Should be an command but not in subsystem
         // if (true) {
@@ -50,7 +53,7 @@ public class LimeLightSubsystem extends SubsystemBase {
     }
 
     public double getDis() {
-        return distanceFromLimeligtToGoalInches;
+        return distanceFromLimeligtToGoal;
     }
 
     public double getX(){
@@ -58,5 +61,8 @@ public class LimeLightSubsystem extends SubsystemBase {
     }
     public double getY(){
         return y;
+    }
+    public double getTarget(){
+        return target;
     }
 }

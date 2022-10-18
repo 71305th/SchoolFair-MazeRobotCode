@@ -8,14 +8,16 @@ import frc.robot.subsystems.LimeLightSubsystem;
 
 public class LimelightAim extends CommandBase {
 
-    private static final double kPangle = 1;
+    private static final double kPangle = 1.65;
     private static final double kIangle = 0.005;
     private static final double kDangle = 0;
     private static final double timeDiff = 0.02;
     
-    private static final double kPdist = 0.25;
+    private static final double kPdist = 0.4;
     private static final double kIdist = 0;
     private static final double kDdist = 0;
+
+    private double target;
 
     private double distError;
     private double integralSumDist;
@@ -42,6 +44,8 @@ public class LimelightAim extends CommandBase {
     }
 
     public void execute() {
+        target = m_limelight.getTarget();
+
         xError = m_limelight.getX()*Math.PI/180;
         distError = m_limelight.getDis();
         if (Math.abs(integralSumX) < 100) {
@@ -56,12 +60,17 @@ public class LimelightAim extends CommandBase {
 
         double output = kPangle * xError + kIangle * integralSumX + kDangle * derivative;
         double distOutput = kPdist * distError + kIdist * integralSumDist + kDdist * distDerivative;
-
-        m_drive.arcadeDrive(distOutput, output);
+        
+        if (target>0){
+            m_drive.arcadeDrive(distOutput, output);
+        } else {
+            m_drive.arcadeDrive(0, 0);
+        }
+        
 
         lastError = xError;
         lastDistError = distError;
-        SmartDashboard.putNumber("output",output);
+        SmartDashboard.putNumber("distOutput",distOutput);
         SmartDashboard.putNumber("distError", distError);
     }
 
@@ -72,7 +81,7 @@ public class LimelightAim extends CommandBase {
     }
 
     public boolean isFinished() {
-        if (Math.abs(xError) < 0.1 && Math.abs(distError)<3){
+        if (Math.abs(xError) < 0.1 && Math.abs(distError)<0.3){
             return true;
         }
         integralSumX = 0;

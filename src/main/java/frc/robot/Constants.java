@@ -17,9 +17,9 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
  */
 public final class Constants {
   public static final class DriveConstants {
-    public static final int kLeftMotor1Port = 3;
-    public static final int kLeftMotor2Port = 4;
-    public static final int kRightMotor1Port = 1;
+    public static final int kLeftMotor1Port = 1;
+    public static final int kLeftMotor2Port = 3;
+    public static final int kRightMotor1Port = 4;
     public static final int kRightMotor2Port = 2;
 
     public static final double kTrackwidthMeters = 0.4482;
@@ -66,13 +66,13 @@ public final class Constants {
   public static final class LimelightConstants {
         // how many degrees back is your limelight rotateed from perfectly vertical
     // check our own limelight degree
-    public static final double limelightMounAngleDegrees = 15.0;
+    public static final double limelightMounAngleDegrees = 52.0;
 
     // distance from the center of the limelight lens to the floor
-    public static final double limelightLensHeightMeters = 0.8;
+    public static final double limelightLensHeightMeters = 0.24;
 
     // distance from the target to the floor
-    public static final double goalHeightMeters = 2.6;
+    public static final double goalHeightMeters = 1;
 
     // define constants
     public static final double KpDistance = -0.1f;
