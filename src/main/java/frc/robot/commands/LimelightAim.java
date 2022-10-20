@@ -76,13 +76,11 @@ public class LimelightAim extends CommandBase {
     public void end(boolean interrupted) {
         if (interrupted) {
             m_drive.arcadeDrive(0, 0);
+            System.out.println("Stopped Limelight Aim");
         }
     }
 
     public boolean isFinished() {
-        if (Math.abs(distError)<0.6){
-            return true;
-        }
         integralSumX = 0;
         integralSumDist = 0;
         return false;

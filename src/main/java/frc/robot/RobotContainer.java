@@ -66,13 +66,12 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         // Drive at half speed when the right bumper is held
-        new JoystickButton(m_driverController, 6)
-                .whenPressed(() -> m_robotDrive.setMaxOutput(0.4))
-                .whenReleased(() -> m_robotDrive.setMaxOutput(0.8));
-        new JoystickButton(m_driverController, 3).whenPressed(new AbsoluteAim(m_robotDrive));
-        new JoystickButton(m_driverController, 1).whenHeld(new LimelightAim(m_robotDrive, m_limelight));
-        new JoystickButton(m_driverController, 2).whenPressed(()->CommandScheduler.getInstance().cancelAll());
-        new JoystickButton(m_driverController, 4).whenPressed(()->m_robotDrive.resetOdometry(new Pose2d(0,0,new Rotation2d(0))));
+        // new JoystickButton(m_driverController, 6)
+        //         .whenPressed(() -> m_robotDrive.setMaxOutput(0.4))
+        //         .whenReleased(() -> m_robotDrive.setMaxOutput(0.8));
+        new JoystickButton(m_driverController, 1).toggleWhenPressed(new LimelightAim(m_robotDrive, m_limelight));
+        // new JoystickButton(m_driverController, 2).whenPressed(()->CommandScheduler.getInstance().cancelAll());
+        // new JoystickButton(m_driverController, 4).whenPressed(()->m_robotDrive.resetOdometry(new Pose2d(0,0,new Rotation2d(0))));
     }
 
     /**
